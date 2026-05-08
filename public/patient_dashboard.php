@@ -12,6 +12,12 @@ include '../includes/header.php';
 <p>هذه لوحة تحكم المريض. اختر ما ترغب في القيام به من الخيارات التالية:</p>
 
 <div class="list-group">
+    <a href="patient_profile.php" class="list-group-item list-group-item-action">
+    الملف الشخصي
+</a>
+<a href="search_doctors.php" class="list-group-item list-group-item-action">
+    البحث عن طبيب
+</a>
     <a href="book_appointment.php" class="list-group-item list-group-item-action">حجز موعد</a>
     <a href="view_calendar.php" class="list-group-item list-group-item-action">عرض مواعيدي</a>
     <a href="medical_record.php" class="list-group-item list-group-item-action">عرض سجلي الطبي</a>

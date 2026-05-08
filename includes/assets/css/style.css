@@ -1,0 +1,15 @@
+
+body {
+    background-image: url('/clinic_system/includes/assets/images/medical-bg.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* جعل محتوى الصفحات واضح فوق الخلفية */
+.container.mt-4 {
+    background: rgba(255, 255, 255, 0.88);
+    padding: 25px;
+    border-radius: 15px;
+}

@@ -8,10 +8,29 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-include '../includes/header.php';
-
 $role = $_SESSION['user']['role'];
 $user_id = $_SESSION['user']['id'];
+
+// إلغاء الموعد للمريض
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_appointment'])) {
+    $appointment_id = $_POST['appointment_id'];
+
+    if ($role === 'patient') {
+        $stmt = $pdo->prepare("
+            UPDATE appointments
+            SET status = 'cancelled'
+            WHERE id = ? 
+              AND patient_id = ?
+              AND status != 'cancelled'
+        ");
+        $stmt->execute([$appointment_id, $user_id]);
+    }
+
+    header("Location: view_calendar.php");
+    exit();
+}
+
+include '../includes/header.php';
 
 if ($role === 'patient') {
     $stmt = $pdo->prepare("
@@ -28,20 +47,35 @@ if ($role === 'patient') {
 
     if (count($appointments) > 0) {
         echo '<ul class="list-group">';
+
         foreach ($appointments as $appointment) {
             echo '<li class="list-group-item">';
             echo '<strong>الطبيب:</strong> د. ' . htmlspecialchars($appointment['doctor_name']) . '<br>';
             echo '<strong>التاريخ:</strong> ' . htmlspecialchars($appointment['appointment_date']) . '<br>';
-            echo '<strong>الحالة:</strong> ' . htmlspecialchars($appointment['status']);
+            echo '<strong>الحالة:</strong> ' . htmlspecialchars($appointment['status']) . '<br>';
+
+            if ($appointment['status'] !== 'cancelled') {
+                echo '
+                    <form method="POST" class="mt-2" onsubmit="return confirm(\'هل أنت متأكد من إلغاء الموعد؟\');">
+                        <input type="hidden" name="appointment_id" value="' . htmlspecialchars($appointment['id']) . '">
+                        <button type="submit" name="cancel_appointment" class="btn btn-danger btn-sm">
+                            إلغاء الموعد
+                        </button>
+                    </form>
+                ';
+            } else {
+                echo '<span class="badge bg-danger mt-2">تم إلغاء الموعد</span>';
+            }
+
             echo '</li>';
         }
+
         echo '</ul>';
     } else {
         echo "<p>لا توجد مواعيد حالياً.</p>";
     }
 
 } elseif ($role === 'doctor') {
-    // مواعيد الطبيب مع اسم المريض
     $stmt = $pdo->prepare("
         SELECT a.*, u.name AS patient_name
         FROM appointments a
@@ -56,6 +90,7 @@ if ($role === 'patient') {
 
     if (count($appointments) > 0) {
         echo '<ul class="list-group">';
+
         foreach ($appointments as $appointment) {
             echo '<li class="list-group-item">';
             echo '<strong>المريض:</strong> ' . htmlspecialchars($appointment['patient_name']) . '<br>';
@@ -63,6 +98,7 @@ if ($role === 'patient') {
             echo '<strong>الحالة:</strong> ' . htmlspecialchars($appointment['status']);
             echo '</li>';
         }
+
         echo '</ul>';
     } else {
         echo "<p>لا توجد مواعيد حالياً.</p>";
