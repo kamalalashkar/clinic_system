@@ -35,7 +35,7 @@ include '../includes/header.php';
         <li class="list-group-item">حجز المواعيد مع الأطباء بسهولة</li>
         <li class="list-group-item">إدارة السجلات الطبية والوصفات</li>
         <li class="list-group-item">استشارات طبية عن بُعد</li>
-        <li class="list-group-item">إشعارات ومتابعة مستمرة</li>
+        <li class="list-group-item">متابعة مستمرة</li>
     </ul>
 </div>
 

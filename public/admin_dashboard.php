@@ -64,6 +64,9 @@ include '../includes/header.php';
     <a href="manage_doctors.php" class="list-group-item list-group-item-action">إدارة الأطباء</a>
     <a href="manage_admins.php" class="list-group-item list-group-item-action">إدارة الإداريين</a>
     <a href="appointments_overview.php" class="list-group-item list-group-item-action">عرض المواعيد</a>
+    <a href="suspicious_appointments.php" class="list-group-item list-group-item-action">
+    كشف المواعيد المشبوهة
+</a>
     <a href="logs.php" class="list-group-item list-group-item-action">سجلات الدخول</a>
 </div>
 

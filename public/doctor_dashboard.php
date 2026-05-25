@@ -8,7 +8,12 @@ checkDoctor();
 include '../includes/header.php';
 ?>
 
-<h2>مرحبًا دكتور/دكتورة <?= htmlspecialchars($_SESSION['user']['name']); ?></h2>
+<?php
+$gender = $_SESSION['user']['gender'];
+$title = ($gender === 'female') ? 'دكتورة' : 'دكتور';
+?>
+
+<h2>مرحبًا <?= $title ?> <?= htmlspecialchars($_SESSION['user']['name']); ?></h2>
 <p>هذه لوحة تحكم الطبيب. اختر ما ترغب في القيام به من الخيارات التالية:</p>
 
 <h3>مواعيد اليوم</h3>
@@ -45,9 +50,13 @@ if (count($appointments) > 0): ?>
 <h3 class="mt-4">الإعدادات</h3>
 <div class="list-group">
     <a href="doctor_profile.php" class="list-group-item list-group-item-action">الملف الشخصي</a>
+    
     <a href="view_calendar.php" class="list-group-item list-group-item-action">عرض جميع مواعيدي</a>
     <a href="manage_medical_records.php" class="list-group-item list-group-item-action">إدارة السجلات الطبية</a>
     <a href="prescription.php" class="list-group-item list-group-item-action">إصدار الوصفات الطبية</a>
+    <a href="suggest_diagnosis.php" class="list-group-item list-group-item-action">
+    اقتراح تشخيص أولي
+</a>
     <a href="consultation.php" class="list-group-item list-group-item-action">الاستشارات عن بعد</a>
 </div>
 
