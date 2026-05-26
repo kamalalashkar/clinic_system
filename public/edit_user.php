@@ -30,6 +30,23 @@ if (!$user) {
     die("المستخدم غير موجود!");
 }
 
+/* تحديد صفحة الرجوع حسب نوع المستخدم */
+$backPage = 'admin_dashboard.php';
+
+switch ($user['role']) {
+    case 'admin':
+        $backPage = 'manage_admins.php';
+        break;
+
+    case 'doctor':
+        $backPage = 'manage_doctors.php';
+        break;
+
+    case 'patient':
+        $backPage = 'manage_patients.php';
+        break;
+}
+
 include '../includes/header.php';
 ?>
 
@@ -66,7 +83,7 @@ include '../includes/header.php';
 
   <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
 
-  <a href="manage_patients.php" class="btn btn-secondary">
+  <a href="<?= $backPage ?>" class="btn btn-secondary">
     رجوع
   </a>
 </form>
