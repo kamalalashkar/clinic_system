@@ -1,4 +1,4 @@
--- قاعدة بيانات نظام إدارة العيادات clinic_db
+﻿-- قاعدة بيانات نظام إدارة العيادات clinic_db
 
 CREATE DATABASE IF NOT EXISTS clinic_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE clinic_db;
@@ -133,4 +133,18 @@ CREATE TABLE IF NOT EXISTS logs (
     action TEXT NOT NULL,
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+);
+
+-- جدول ربط الكلمات المفتاحية الطبية بالتخصص المناسب
+CREATE TABLE IF NOT EXISTS symptom_specialty_rules (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    keyword VARCHAR(100) NOT NULL,
+    specialty VARCHAR(100) NOT NULL
+);
+
+-- جدول ربط الكلمات المفتاحية بالتشخيصات المقترحة
+CREATE TABLE IF NOT EXISTS diagnosis_rules (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    keyword VARCHAR(100) NOT NULL,
+    suggested_diagnosis VARCHAR(255) NOT NULL
 );
